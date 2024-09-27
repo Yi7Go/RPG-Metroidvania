@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de297d1498c11a408a5fc9937c216a9, type: 3}
+  m_Name: Thounder strike effect
+  m_EditorClassIdentifier: 
+  effectDescription: Creat thound strike on hit.
+  thounderStrikePrefab: {fileID: 7136014671977473480, guid: 340ef111b743186478193122da9943c7, type: 3}
