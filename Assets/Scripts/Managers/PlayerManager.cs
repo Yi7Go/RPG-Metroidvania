@@ -29,10 +29,10 @@ public class PlayerManager : MonoBehaviour,ISaveManager
         return true;
     }
 
-    private void Update()
-    {
+    //private void Update()
+    //{
         
-    }
+    //}
 
     public int GetCurrency() => currency;
 

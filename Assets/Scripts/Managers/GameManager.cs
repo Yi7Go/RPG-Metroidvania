@@ -7,7 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour,ISaveManager
 {
     public static GameManager instance;
+
+    private Transform player;
+
     [SerializeField] private Checkpoint[] checkpoints;
+    [SerializeField] private string closestCheckpointId;
 
     [Header("Lost currency")]
     [SerializeField] private GameObject lostCurrencyPrefab;
@@ -16,6 +20,7 @@ public class GameManager : MonoBehaviour,ISaveManager
     [SerializeField] private float lostCurrencyY;
     public void Awake()
     {
+        checkpoints = FindObjectsOfType<Checkpoint>(true);
 
 
         if (instance != null)
@@ -27,12 +32,12 @@ public class GameManager : MonoBehaviour,ISaveManager
 
     public void Start()
     {
-        checkpoints = FindObjectsOfType<Checkpoint>(true);
-        
+        player = PlayerManager.instance.player.transform;
     }
 
     public void RestartScene()
     {
+        SaveManager.instance.SaveGame();
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
@@ -40,19 +45,76 @@ public class GameManager : MonoBehaviour,ISaveManager
 
     public void LoadData(GameData _data)
     {
+       
 
-        foreach (KeyValuePair<string,bool> pair in _data.checkpoints)
+
+        StartCoroutine(LoadWithDelay(_data));
+
+    }
+
+    private void LoadCheckpoints(GameData _data)
+    {
+        foreach (KeyValuePair<string, bool> pair in _data.checkpoints)
         {
             foreach (Checkpoint checkpoint in checkpoints)
             {
-                if(checkpoint.id == pair.Key && pair.Value ==true)
+                if (checkpoint.id == pair.Key && pair.Value == true)
                     checkpoint.ActivateCheckpoint();
             }
         }
     }
 
+    private void LoadLostCurrency(GameData _data)
+    {
+        lostCurrencyAmount = _data.lostCurrencyAmount;
+        lostCurrencyX = _data.lostCurrencyX;
+        lostCurrencyY = _data.lostCurrencyY;
+
+        if (lostCurrencyAmount > 0)
+        {
+            GameObject newLostCurrency = Instantiate(lostCurrencyPrefab, new Vector3(lostCurrencyX, lostCurrencyY), Quaternion.identity);
+            newLostCurrency.GetComponent<LostCurryController>().currency = lostCurrencyAmount;
+        }
+
+        lostCurrencyAmount = 0;
+    }
+
+    private IEnumerator LoadWithDelay(GameData _data)
+    {
+        yield return new WaitForSeconds(.1f);
+
+        LoadCheckpoints(_data);
+        LoadClosestCheckpoint(_data);
+        LoadLostCurrency(_data);
+
+
+
+
+    }
+
+    private void LoadClosestCheckpoint(GameData _data)
+    {
+        if(_data.closestCheckpointId == null)
+            return;
+
+        closestCheckpointId = _data.closestCheckpointId;
+
+        foreach (Checkpoint checkpoint in checkpoints)
+        {
+            if (closestCheckpointId == checkpoint.id)
+                player.position = checkpoint.transform.position;
+        }
+    }
+
     public void SaveData(ref GameData _data)
     {
+        _data.lostCurrencyAmount = lostCurrencyAmount;
+        _data.lostCurrencyX = player.position.x;
+        _data.lostCurrencyY = player.position.y;
+
+
+        if (FindClosestCheckpoint() != null)
+        _data.closestCheckpointId = FindClosestCheckpoint().id;
 
         _data.checkpoints.Clear();
 
@@ -61,6 +123,30 @@ public class GameManager : MonoBehaviour,ISaveManager
             _data.checkpoints.Add(checkpoint.id, checkpoint.activationStatus);
         }
     }
+
+    private Checkpoint FindClosestCheckpoint()
+    {
+        float closestDistance = Mathf.Infinity;
+        Checkpoint closestCheckpoint = null;
+
+
+        foreach (var checkpoint in checkpoints)
+        {
+            float ditanceToCheckpoint = Vector2.Distance(player.position,checkpoint.transform.position);
+
+            if (ditanceToCheckpoint < closestDistance && checkpoint.activationStatus == true)
+            {
+                closestDistance = ditanceToCheckpoint;
+                closestCheckpoint = checkpoint;
+            }
+
+        }
+
+        return closestCheckpoint;
+    }
+
+
+
     public void PauseGame(bool _pause)
     {
         if(_pause)

@@ -9,7 +9,7 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
     [SerializeField] private string fileName;
 
-    public GameData gameData;
+    private GameData gameData;
     private List<ISaveManager> saveManagers;
     private FileDataHandler dataHandler;
 
@@ -44,6 +44,7 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
+
         gameData = dataHandler.Load();
 
         if (this.gameData == null)
@@ -61,6 +62,7 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("game was saved");
         foreach (ISaveManager saveManager in saveManagers)
         {
             saveManager.SaveData(ref gameData);
@@ -77,9 +79,9 @@ public class SaveManager : MonoBehaviour
     }
     private List<ISaveManager> FindAllSaveManagers()
     {
-        IEnumerable<ISaveManager>saveManager = FindObjectsOfType<MonoBehaviour>(true).OfType<ISaveManager>();
+        IEnumerable<ISaveManager>saveManagers = FindObjectsOfType<MonoBehaviour>(true).OfType<ISaveManager>();
 
-        return new List<ISaveManager>(saveManager);
+        return new List<ISaveManager>(saveManagers);
     }
 
     public bool HasSavedData()

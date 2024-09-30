@@ -35,7 +35,7 @@ public class FileDataHandler
         }
         catch (Exception e)
         {
-            Debug.LogError("erro on trying to save data to file");
+            Debug.LogError("erro on trying to save data to file :" + fullPath + "\n" + e);
         }
     }
 
@@ -64,8 +64,13 @@ public class FileDataHandler
             }
             catch (Exception e)
             {
-                Debug.Log("erro on trying to load data from file:" + fullPath + "\n" +e);
+                Debug.Log($"Failed to load game data from:\n{fullPath}\n{e.Message}");
             }
+
+            //catch (Exception e)
+            //{
+            //    Debug.Log("erro on trying to load data from file:" + fullPath + "\n" +e);
+            //}
         }
 
         return loadData;

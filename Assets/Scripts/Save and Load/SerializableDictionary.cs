@@ -9,8 +9,9 @@ public class SerializableDictionary<Tkey, TValue> : Dictionary<Tkey, TValue>, IS
 {
     [SerializeField] private List<Tkey> keys = new List<Tkey>();
     [SerializeField] private List<TValue> values = new List<TValue>();
-    public void OnAfterDeserialize()
+    public void OnBeforeSerialize()
     {
+
         keys.Clear();
         values.Clear();
 
@@ -21,9 +22,9 @@ public class SerializableDictionary<Tkey, TValue> : Dictionary<Tkey, TValue>, IS
         }
 
     }
-
-    public void OnBeforeSerialize()
+    public void OnAfterDeserialize()
     {
+
         this.Clear();
 
         if (keys.Count != Values.Count)
@@ -35,5 +36,7 @@ public class SerializableDictionary<Tkey, TValue> : Dictionary<Tkey, TValue>, IS
         {
             this.Add(keys[i], values[i]);
         }
+
     }
 }
+

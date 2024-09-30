@@ -158,7 +158,7 @@ public class CharacterStats : MonoBehaviour
     {
         bool criticalStrike = false;
 
-        if(TargetCanAvoidAttack(_targetStats))
+        if(_targetStats.isInvincible)
             return;
 
         if (TargetCanAvoidAttack(_targetStats))
@@ -177,7 +177,7 @@ public class CharacterStats : MonoBehaviour
         fx.CreateHitFx(_targetStats.transform,criticalStrike);
 
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
-        _targetStats.TakeDamage(totalDamage);
+        _targetStats.TakeDamage(totalDamage);//×î³õ°æ±¾
 
         //if inventery crrent weapon has the fire effect
         //DoMagicDamage(_targetStats);

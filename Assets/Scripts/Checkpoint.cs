@@ -13,12 +13,12 @@ public class Checkpoint : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
+    [ContextMenu("Generate checkpoint id")]
     private void Start()
     {        
     }
 
 
-    [ContextMenu("Generate checkpoint id")]
 
     private void GenerateId()
     {
@@ -37,9 +37,11 @@ public class Checkpoint : MonoBehaviour
 
     public void ActivateCheckpoint()
     {
-        if (activationStatus == false) 
+        //if (activationStatus == false) 
         AudioManager.instance.PlaySFX(5,transform);
-        anim.SetBool("active", true);
         activationStatus = true;
+        anim.SetBool("active", true);
+        Debug.Log("checkpoint active");
+
     }
 }

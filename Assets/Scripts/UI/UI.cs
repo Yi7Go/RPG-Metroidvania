@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,8 @@ public class UI : MonoBehaviour,ISaveManager
     public void Awake()
     {
         SwitchTo(skillTreeUI);//we need this to assign events on skill tree slots before we assign on skill scripts
+
+        fadeScreen.gameObject.SetActive(true);
     }
 
 
@@ -97,7 +100,7 @@ public class UI : MonoBehaviour,ISaveManager
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if(transform.GetChild(i).gameObject.activeSelf && transform.GetChild(i).GetComponent<UI_FadeScreen>() == null)
+            if(transform.GetChild(i).gameObject.activeSelf && transform.GetChild(i).GetComponent<UI_FadeScreen>() == null)// && transform.GetChild(i).GetComponent<UI_FadeScreen>() == null)
                 return;
         }
 
