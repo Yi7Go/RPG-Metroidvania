@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c450f234cdb0de84586d5b5e8b7f759a, type: 3}
+  m_Name: GetsugaTenshou effect
+  m_EditorClassIdentifier: 
+  effectDescription: 
+  GetsugaTenshouPrefab: {fileID: 8329009364848352333, guid: a97d50f7cf6e8ea4291dbf6c13ec4ef1, type: 3}
+  newVelocity: {x: 10, y: 0}

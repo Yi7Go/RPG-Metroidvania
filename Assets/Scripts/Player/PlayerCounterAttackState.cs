@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerCounterAttackState : PlayerState
 {
@@ -70,5 +71,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         stateTimer = 10;
         player.anim.SetBool("SuccessfulCounterAttack", true);
+        AudioManager.instance.PlaySFX(34, null);
+
     }
 }
