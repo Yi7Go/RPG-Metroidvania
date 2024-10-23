@@ -37,7 +37,7 @@ public class CharacterStats : MonoBehaviour
     [Header("Offensive stats")]
     public Stat damage;
     public Stat critChance;
-    public Stat critPower;               //default value 150%
+    public Stat critPower;               //default value 120%
 
     [Header("Defencive stats")]
     public Stat maxHealth;
@@ -84,7 +84,7 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void Start()
     {
-        critPower.SetDefaultValue(200);
+        critPower.SetDefaultValue(120);
         currentHealth = GetMaxHealthValue();
 
         fx = GetComponent<EntityFX>();

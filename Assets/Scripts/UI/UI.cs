@@ -17,6 +17,8 @@ public class UI : MonoBehaviour,ISaveManager
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject inGameUI;
+    [SerializeField] private GameObject dialogueUI;
+
 
 
 
@@ -52,6 +54,10 @@ public class UI : MonoBehaviour,ISaveManager
 
         if(Input.GetKeyDown(KeyCode.O))
             SwitchWithKeyTo(optionsUI);
+
+        //if (Input.GetKeyDown(KeyCode.E))
+            //SwitchWithKeyTo(dialogueUI);
+
     }
 
     public void SwitchTo(GameObject _menu)
